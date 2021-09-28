@@ -30,7 +30,7 @@ import (
 	"time"
 
 	gogit "github.com/go-git/go-git/v5"
-	libgit2 "github.com/libgit2/git2go/v31"
+	libgit2 "github.com/libgit2/git2go/v32"
 
 	"github.com/ProtonMail/go-crypto/openpgp"
 	securejoin "github.com/cyphar/filepath-securejoin"
@@ -680,11 +680,11 @@ func push(ctx context.Context, path, branch string, access repoAccess) error {
 	// calling repo.Push will succeed even if a reference update is
 	// rejected; to detect this case, this callback is supplied.
 	var callbackErr error
-	callbacks.PushUpdateReferenceCallback = func(refname, status string) libgit2.ErrorCode {
+	callbacks.PushUpdateReferenceCallback = func(refname, status string) error {
 		if status != "" {
 			callbackErr = fmt.Errorf("ref %s rejected: %s", refname, status)
 		}
-		return libgit2.ErrOk
+		return nil
 	}
 	err = origin.Push([]string{fmt.Sprintf("refs/heads/%s:refs/heads/%s", branch, branch)}, &libgit2.PushOptions{
 		RemoteCallbacks: callbacks,
