@@ -7,4 +7,7 @@ RUN groupadd -g 116 test && \
 # Run as test user
 USER test
 
+# Set path to envtest binaries.
+ENV PATH="/github/workspace/envtest:${PATH}"
+
 ENTRYPOINT ["/bin/sh", "-c"]
