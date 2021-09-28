@@ -10,6 +10,12 @@ CRD_OPTIONS ?= crd:crdVersions=v1
 BASE_IMG ?= ghcr.io/hiddeco/golang-with-libgit2
 BASE_TAG ?= dev
 
+# Allows for defining additional Docker buildx arguments,
+# e.g. '--push'.
+BUILDX_ARGS ?=
+# Architectures to build images for
+BUILDX_PLATFORMS ?= linux/amd64,linux/arm64,linux/arm/v7
+
 # Directory with versioned, downloaded things
 CACHE := cache
 
@@ -131,6 +137,14 @@ docker-build:  ## Build the Docker image
 		--build-arg BASE_IMG=$(BASE_IMG) \
 		--build-arg BASE_TAG=$(BASE_TAG) \
 		-t $(IMG):$(TAG) .
+
+docker-buildx:  ## Build the cross-platform Docker image
+	docker buildx build \
+		--build-arg BASE_IMG=$(BASE_IMG) \
+		--build-arg BASE_TAG=$(BASE_TAG) \
+		--platform=$(BUILDX_PLATFORMS) \
+		-t $(IMG):$(TAG) \
+		$(BUILDX_ARGS) .
 
 docker-push:	## Push the Docker image
 	docker push $(IMG):$(TAG)
