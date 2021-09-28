@@ -16,7 +16,7 @@ require (
 	github.com/fluxcd/pkg/ssh v0.1.0
 	// If you bump this, change SOURCE_VER in the Makefile to match
 	// TODO(hidde): set to tagged version of release.
-	github.com/fluxcd/source-controller v0.15.5-0.20210928082557-e76a70e53e1a
+	github.com/fluxcd/source-controller v0.15.5-0.20210928151156-c03db6234dcd
 	github.com/fluxcd/source-controller/api v0.15.4
 	github.com/go-git/go-billy/v5 v5.3.1
 	github.com/go-git/go-git/v5 v5.4.2
